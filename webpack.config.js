@@ -1,14 +1,26 @@
 const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const webpack = require('webpack');
 
 const PATHS = {
-    source: path.join(__dirname, 'source'),
     build: path.join(__dirname, 'build')
 };
- 
+
 module.exports = {
-    entry: PATHS.source + '\\bauform-create-functionality.js',
+    mode: 'development',
     output: {
         path: PATHS.build,
         filename: '[name].js'
+    },
+    devtool: 'inline-source-map',
+    plugins: [new HtmlWebpackPlugin({
+        title: 'Dev',
+        template: './index.html'
+    }), new webpack.HotModuleReplacementPlugin()],
+    devServer: {
+        contentBase: './build',
+        compress: true,
+        port: 9000,
+        hot: true
     }
 };
